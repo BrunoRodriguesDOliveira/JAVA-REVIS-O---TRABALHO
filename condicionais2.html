@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificar Dia da Semana</title>
+</head>
+<body>
+    <h1>Verificador de dia da semana!</h1>
+
+    <input type="number" id="diaSemana" placeholder="Digite um número (1-7)" min="1" max="7">
+    <button onclick="verificarDia()">Verificar</button>
+
+    <p id="resultado"></p>
+
+    <script>
+        function verificarDia(){
+            const dia = parseInt(document.getElementById("diaSemana").value);
+            let mensagem;
+            
+            switch(dia){
+                case 1:
+                    mensagem = "Domingo, Um belo dia queridão";
+                    break;
+                case 2:
+                    mensagem = "Segunda, Dia do clt médio";
+                    break;
+                case 3:
+                    mensagem = "Terça, estamos chegando na sexta já!";
+                    break;
+                case 4:
+                    mensagem = "Quarta, só tristeza!";
+                    break;   
+                case 5:
+                    mensagem = "Quinta,Quase o dia de tomar uma";
+                    break;
+                case 6:
+                    mensagem = "Sexta, SEEEEXTOU DA MELHOR FORMA";
+                    break;
+                case 7:
+                    mensagem = "Sábado";
+                    break;
+                default:
+                    mensagem = "Dia inválido! Digite um número de 1 a 7.";
+            }
+            
+            document.getElementById("resultado").innerText = mensagem;
+        }
+    </script>
+</body>
+</html>
