@@ -4,48 +4,265 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verificar Dia da Semana</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 900px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        #diaSemana {
+            flex: 1;
+            min-width: 250px;
+            padding: 15px 20px;
+            border: 2px solid #7b83aa;
+            border-radius: 12px;
+            font-size: 1.1em;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        #diaSemana:focus {
+            border-color: #363a3b;
+            box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.1);
+        }
+
+        .verificar-btn {
+            background: linear-gradient(135deg, #5464aa 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .verificar-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .verificar-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .resultado {
+            display: none;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .resultado.ativo {
+            display: block;
+        }
+
+        .resultado img {
+            width: 100%;
+            max-width: 400px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .resultado h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 2em;
+        }
+
+        .resultado p {
+            color: #555;
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .input-container {
+                flex-direction: column;
+            }
+
+            #diaSemana {
+                min-width: 100%;
+            }
+
+            .verificar-btn {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Verificador de dia da semana!</h1>
+    <div class="container">
+        <h1>🗓️ Verificador de Dia da Semana!</h1>
 
-    <input type="number" id="diaSemana" placeholder="Digite um número (1-7)" min="1" max="7">
-    <button onclick="verificarDia()">Verificar</button>
+        <div class="input-container">
+            <input type="text" id="diaSemana" placeholder="Digite o dia da semana (ex: segunda, terça...)">
+            <button class="verificar-btn" onclick="verificarDia()">Verificar</button>
+        </div>
 
-    <p id="resultado"></p>
+        <div id="resultado" class="resultado"></div>
+    </div>
 
     <script>
-        function verificarDia(){
-            const dia = parseInt(document.getElementById("diaSemana").value);
-            let mensagem;
+        function verificarDia() {
+            let diaSemana = document.getElementById("diaSemana").value.toLowerCase().trim();
             
-            switch(dia){
-                case 1:
-                    mensagem = "Domingo, Um belo dia queridão";
+            
+            diaSemana = diaSemana.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            
+            
+            diaSemana = diaSemana.replace(/-/g, "").replace(/\s/g, "");
+            
+            let titulo = "";
+            let mensagem = "";
+            let imagem = "";
+            
+            switch(diaSemana) {
+                case "domingo":
+                case "dom":
+                    titulo = "Domingo";
+                    mensagem = "Dia de descanso dos gurizinho";
+                    imagem = "https://www.mensagensdebomdia.com.br/wp-content/uploads/2025/06/bom-dia-domingo-19.jpg";
                     break;
-                case 2:
-                    mensagem = "Segunda, Dia do clt médio";
+                    
+                case "segunda":
+                case "segundafeira":
+                case "seg":
+                    titulo = "Segunda-feira";
+                    mensagem = "Dia do CLT médio!";
+                    imagem = "https://i.pinimg.com/originals/1a/98/5c/1a985c468a3c7367ce18823f7da4f039.gif";
                     break;
-                case 3:
-                    mensagem = "Terça, estamos chegando na sexta já!";
+                    
+                case "terca":
+                case "tercafeira":
+                case "ter":
+                    titulo = "Terça-feira";
+                    mensagem = "Estamos chegando na sexta já";
+                    imagem = "https://i.pinimg.com/originals/e7/e4/a9/e7e4a99e28f33ca94ce0aea0149ba3f2.gif";
                     break;
-                case 4:
-                    mensagem = "Quarta, só tristeza!";
-                    break;   
-                case 5:
-                    mensagem = "Quinta,Quase o dia de tomar uma";
+                    
+                case "quarta":
+                case "quartafeira":
+                case "qua":
+                    titulo = "Quarta-feira";
+                    mensagem = "Só tristeza!";
+                    imagem = "https://imagens.net.br/wp-content/uploads/2024/07/alegre-sua-quarta-feira-com-gifs-de-bom-dia-3.gif";
                     break;
-                case 6:
-                    mensagem = "Sexta, SEEEEXTOU DA MELHOR FORMA";
+                    
+                case "quinta":
+                case "quintafeira":
+                case "qui":
+                    titulo = "Quinta-feira";
+                    mensagem = "Quase o dia de tomar uma! A semana tá quase no fim! 🍺";
+                    imagem = "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&h=600&fit=crop";
                     break;
-                case 7:
-                    mensagem = "Sábado";
+                    
+                case "sexta":
+                case "sextafeira":
+                case "sex":
+                    titulo = "Sexta-feira";
+                    mensagem = "SEEEEXTOU DA MELHOR FORMA";
+                    imagem = "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&h=600&fit=crop";
                     break;
+                    
+                case "sabado":
+                case "sab":
+                    titulo = "Sábado";
+                    mensagem = "Dia de curtir a vida! ";
+                    imagem = "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=600&fit=crop";
+                    break;
+                    
                 default:
-                    mensagem = "Dia inválido! Digite um número de 1 a 7.";
+                    titulo = " Dia inválido!";
+                    mensagem = " digite um dia da semana válido (domingo, segunda, terça, quarta, quinta, sexta ou sábado)";
+                    imagem = "";
             }
             
-            document.getElementById("resultado").innerText = mensagem;
+            let resultadoDiv = document.getElementById("resultado");
+            
+            if (imagem) {
+                resultadoDiv.innerHTML = `
+                    <img src="${imagem}" alt="${titulo}">
+                    <h2>${titulo}</h2>
+                    <p>${mensagem}</p>
+                `;
+            } else {
+                resultadoDiv.innerHTML = `
+                    <h2 style="color: #e74c3c;">${titulo}</h2>
+                    <p>${mensagem}</p>
+                `;
+            }
+            
+            resultadoDiv.classList.add("ativo");
+            resultadoDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
+        
+        // Permitir verificar ao pressionar Enter
+        document.getElementById("diaSemana").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                verificarDia();
+            }
+        });
     </script>
 </body>
 </html>
